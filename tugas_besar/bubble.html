@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Benchmark Sorting Go</title>
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9fafb; }
+    h2 { color: #1d4ed8; }
+    button, select, input { 
+        padding: 10px; margin: 5px; border-radius: 6px; 
+        border: 1px solid #ccc; 
+    }
+    button { background: #2563eb; color: white; cursor: pointer; border: none; }
+    button:hover { background: #1e40af; }
+    pre { background:#fff; padding:10px; border:1px solid #ddd; border-radius:6px; max-height:150px; overflow:auto; }
+    .section { margin-top:15px; }
+    .loading { color:#dc2626; }
+</style>
+</head>
+<body>
+
+<h2>Benchmark Sorting GoLang: Custom Comparison</h2>
+
+<label>Jumlah data</label><br>
+<input id="dataSize" type="number" placeholder="Masukkan jumlah elemen...">
+
+<div class="section">
+    <strong>Pilih Algoritma 1</strong><br>
+    <select id="alg1">
+        <option value="bubble_sequential">Sequential - Bubble</option>
+        <option value="bubble_parallel">Parallel - Bubble</option>
+        <option value="selection_sequential">Sequential - Selection</option>
+        <option value="selection_parallel">Parallel - Selection</option>
+    </select>
+</div>
+
+<div class="section">
+    <strong>Pilih Algoritma 2</strong><br>
+    <select id="alg2">
+        <option value="bubble_sequential">Sequential - Bubble</option>
+        <option value="bubble_parallel">Parallel - Bubble</option>
+        <option value="selection_sequential">Sequential - Selection</option>
+        <option value="selection_parallel">Parallel - Selection</option>
+    </select>
+</div>
+
+<button onclick="runCompare()">Run Comparison</button>
+
+<p id="status"></p>
+
+<div class="section">
+    <h3>Result</h3>
+</div>
+
+<div class="section">
+    <strong>Algoritma 1:</strong>
+    <pre id="res1"></pre>
+</div>
+
+<div class="section">
+    <strong>Algoritma 2:</strong>
+    <pre id="res2"></pre>
+</div>
+
+<script>
+async function runSingle(type, size) {
+const map = {
+    bubble_sequential: "http://localhost:8080/bubble/sequential",
+    bubble_parallel:   "http://localhost:8080/bubble/parallel",
+
+    selection_sequential: "http://localhost:8080/selection/sequential",
+    selection_parallel:   "http://localhost:8080/selection/parallel"
+};
+
+
+    const url = `${map[type]}?size=${size}`;
+    const res = await fetch(url);
+    return await res.json();
+}
+
+async function runCompare() {
+    const size = document.getElementById("dataSize").value;
+    const alg1 = document.getElementById("alg1").value;
+    const alg2 = document.getElementById("alg2").value;
+
+    if (!size) {
+        alert("Masukkan jumlah data dulu!");
+        return;
+    }
+
+    document.getElementById("status").innerHTML = "<span class='loading'>Running benchmarks...</span>";
+
+    const r1 = await runSingle(alg1, size);
+    const r2 = await runSingle(alg2, size);
+
+    document.getElementById("res1").textContent = `Time: ${r1.time}\nBefore: ${r1.before}\nAfter: ${r1.after}`;
+    document.getElementById("res2").textContent = `Time: ${r2.time}\nBefore: ${r2.before}\nAfter: ${r2.after}`;
+
+    document.getElementById("status").textContent = "";
+}
+</script>
+</body>
+</html>
