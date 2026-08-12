@@ -2,7 +2,7 @@
 
 Proyek ini membandingkan kinerja algoritma **Bubble Sort** dan **Selection Sort** dalam dua pendekatan: **sequential** dan **parallel** (menggunakan Goroutine + WaitGroup) pada bahasa Go. Pengujian dilakukan pada berbagai ukuran data (10.000–500.000 elemen) untuk menganalisis dampak paralelisasi terhadap waktu eksekusi, dilengkapi REST API dan antarmuka web sederhana untuk menjalankan benchmark secara interaktif.
 
-📄 Laporan lengkap (metode pengujian, hasil, analisis, dan penjelasan kode) tersedia di file [`Laporan_Komputasi_Paralel.pdf`](./Laporan_Komputasi_Paralel.pdf).
+📄 Laporan lengkap (metode pengujian, hasil, analisis, dan penjelasan kode) tersedia di file [`Laporan_Komputasi_Paralel.pdf`](./Laporan Dan Panduan Komputasi Paralel - Heru Khoerudin 231351059.pdf).
 
 ## Tujuan
 
